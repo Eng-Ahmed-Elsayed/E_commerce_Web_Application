@@ -1,0 +1,24 @@
+
+
+                    <form method="get" action="{% url 'ad_list_view' %}">
+                        <div class="form-row align-items-center ml-lg-5 ">
+                            <div class="form-group col-xl-4 col-lg-3 col-md-6 ml-lg-5 mr-lg-2">
+                                <input type="text" class="form-control my-2 my-lg-0 " id="inputtext4"
+                                    placeholder="What are you looking for" name="q">
+                            </div>
+                            <div class="form-group col-lg-3 col-md-6 mx-lg-2">
+                                <select class="w-100 form-control my-2 my-lg-0" name="category">
+                                    <option value="">All Categories</option>
+                                    {% for category in all_categories %}
+                                    <option value="{{category}}">{{category.name.capitalize}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                          
+                            <div class="form-group col-xl-2 col-lg-3 col-md-6 mx-lg-2">
+
+                                <button type="submit" class="btn btn-primary active w-100">Search Now</button>
+                            </div>
+                        </div>
+                    </form>
+                

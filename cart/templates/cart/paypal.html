@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+{% block title %} Buy {{ad.name}} {% endblock %}
+{% block content %}
+<!-- Set up a container element for the button -->
+<div class="container">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 my-5 text-center">
+            <div id="paypal-button-container"></div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+
+
+<!-- Include the PayPal JavaScript SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=AZGuA_wqN6_nxXovTGuiqo7-X8YcLpAKFxywonB7UYQHPiG2mVHvjuVf2JsAqzX3Nep4uzD3GsxuHdE3&currency=USD"></script>
+<script>
+    // Render the PayPal button into #paypal-button-container
+    paypal.Buttons({
+
+        // Set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    ad: {
+                        name: "{{ad.name}}"
+                    },
+                    amount: {
+                        value: "{{ad.price}}"
+                    }
+                }]
+            });
+        },
+
+        // Finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(orderData) {
+                // Successful capture! For demo purposes:
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                var transaction = orderData.purchase_units[0].payments.captures[0];
+                alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\n Thank you for your payment');
+                return window.location.replace('{% url "buy_ad" ad.id %}');
+
+            });
+        }
+
+
+    }).render('#paypal-button-container');
+</script>
+{% endblock %}

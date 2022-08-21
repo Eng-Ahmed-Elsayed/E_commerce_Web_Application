@@ -1,0 +1,143 @@
+{% for ad in ads %}
+<tr>
+  <td class="product-thumb">
+    <a href="{% url 'ad_view' ad.id %}">
+      <img width="80px" height="auto" src="{{ad.img.url}}" alt="image description">
+  </td>
+  </a>
+  <td class="product-details">
+    <h3 class="">{{ad.name}}</h3>
+    <div class="row">
+      <div class="col-6">
+        <strong class="mr-sm-4">Ad ID: </strong>
+      </div>
+      <div class="col-6">
+        {{ad.id}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 fw-bold">
+        <strong class="">Ad Price:</strong>
+      </div>
+      <div class="col-6">
+        ${{ad.price}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <strong>Posted on: </strong>
+      </div>
+      <div class="col-6">
+        <time>{{ad.created}}</time>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <strong class="">Status: </strong>
+      </div>
+      <div class="col-6">
+        {{ad.status}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <strong >Location: </strong>
+      </div>
+      <div class="col-6">
+        {{ad.location}}
+      </div>
+    </div>
+  </td>
+  <td class="product-category"><span class="categories">{{ad.category.name.capitalize}}</span></td>
+  {% if page_name == 'My Ads' or page_name == 'Pending Approval' %}
+  <td class="action" data-title="Action">
+    <div class="">
+      <ul class="list-inline justify-content-center">
+        <li class="list-inline-item">
+          <a data-toggle="tooltip" data-placement="top" title="view" class="view" href="{% url 'ad_view' ad.id %}">
+            <i class="fa fa-eye"></i>
+          </a>
+        </li>
+        {% if request.user == ad.user %}
+        <li class="list-inline-item">
+          <a class="edit" data-toggle="tooltip" data-placement="top" title="Edit" href="{% url 'edit_ad' ad.id %}">
+            <i class="fa fa-pencil"></i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="delete " data-toggle="modal" data-placement="top" title="Delete" href="#myModal">
+            <i class="fa fa-trash"></i>
+          </a>
+        </li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </td>
+  {% elif page_name == 'Archived Ads' %}
+  <td class="action" data-title="Action">
+    <div class="">
+      <ul class="list-inline justify-content-center">
+        <li class="list-inline-item">
+          <a data-toggle="tooltip" data-placement="top" title="view" class="view" href="{% url 'ad_view' ad.id %}">
+            <i class="fa fa-eye"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </td>
+  {% else %}
+  <td class="action" data-title="Action">
+    <div class="">
+      <ul class="list-inline justify-content-center">
+        <li class="list-inline-item">
+          <a data-toggle="tooltip" data-placement="top" title="view" class="view" href="{% url 'ad_view' ad.id %}">
+            <i class="fa fa-eye"></i>
+          </a>
+        </li>
+
+        <!-- Remove ad form favourite -->
+        <li class="list-inline-item">
+          <a class="delete " data-toggle="modal" data-placement="top" title="Delete" href="#myModal">
+            <i class="fa fa-trash"></i>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </td>
+  {% endif %}
+</tr>
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+
+        <h4 class="modal-title w-100 text-center">Are you sure?</h4>
+      </div>
+      {% if page_name != 'Favourite Ads' %}
+      <div class="modal-body">
+        <p>Do you really want to delete {{ad.name}}? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary bg-secondary" data-dismiss="modal">Cancel</button>
+        <a href="{% url 'delete_ad' ad.id %}">
+          <button type="button" class="btn btn-danger">Delete</button>
+        </a>
+      </div>
+      {% else %}
+      <div class="modal-body">
+        <p>Do you really want to delete {{ad.name}} from your favourite? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary bg-secondary" data-dismiss="modal">Cancel</button>
+        <a href="{% url 'delete_ad_from_fav' ad.id %}">
+          <button type="button" class="btn btn-danger">Delete</button>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endfor %}

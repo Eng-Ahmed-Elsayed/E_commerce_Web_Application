@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+{% block title %} Edit Review {% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 border border-secondary p-3 m-4">
+            <div class="d-flex align-items-center justify-content-center">
+                <div class="product-review p-2 bd-highlight col-example">
+                    <div class="review-submission">
+                        <h3 class="tab-title text-center">Edit your review</h3>
+                        {% if user_review.user == request.user %}
+                        <div class="review-submit">
+                            <form action="" method="POST" class="row">
+                                {% csrf_token %}
+                                {% for field in form %}
+                                <div class="col-lg-12 mb-3">
+                                    <h6 for=" {{field.name}} " class="font-weight-bold pt-4 pb-1 ">{{field.label}}</h6>
+                                    {{field}}
+                                </div>
+                                {% endfor %}
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-main">Sumbit</button>
+                                </div>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% for ad in ads %}
+<tr>
+  <td class="product-thumb">
+    <a href="{% url 'ad_view' ad.id %}">
+      <img width="80px" height="auto" src="{{ad.img.url}}" alt="image description">
+  </td>
+  </a>
+  <td class="product-details">
+    <h3 class="">{{ad.name}}</h3>
+    <div class="row">
+      <div class="col-6">
+        <strong class="mr-sm-4">Ad ID: </strong>
+      </div>
+      <div class="col-6">
+        {{ad.id}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 fw-bold">
+        <strong class="">Ad Price:</strong>
+      </div>
+      <div class="col-6">
+        ${{ad.price}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <strong>Posted on: </strong>
+      </div>
+      <div class="col-6">
+        <time>{{ad.created}}</time>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <strong class="">Status: </strong>
+      </div>
+      <div class="col-6">
+        {{ad.status}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <strong >Location: </strong>
+      </div>
+      <div class="col-6">
+        {{ad.location}}
+      </div>
+    </div>
+  </td>
+  <!-- <td class="product-details">
+    <h3 class="title">{{ad.name}}</h3>
+    <span class="add-id"><strong>Ad ID:</strong> {{ad.id}}</span>
+    <span class="add-id"><strong>Ad Price: </strong>${{ad.price}}</span>
+    <span><strong>Posted on: </strong><time>{{ad.created}}</time> </span>
+    <span class="status active"><strong>Status</strong>{{ad.status}}</span>
+    <span class="location"><strong>Location</strong>{{ad.location}}</span>
+  </td> -->
+  <td class="product-category"><span class="categories">{{ad.category.name.capitalize}}</span></td>
+  <td class="action" data-title="Action">
+    <div class="">
+      <ul class="list-inline justify-content-center">
+        <li class="list-inline-item">
+          <a data-toggle="tooltip" data-placement="top" title="view" class="view" href="{% url 'ad_view' ad.id %}">
+            <i class="fa fa-eye"></i>
+          </a>
+        </li>
+        {% if page_name == 'My Cart' %}
+        <li class="list-inline-item">
+          <a class="edit " data-toggle="modal" data-placement="top" title="Delete" href="#buy_ad_">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="delete " data-toggle="modal" data-placement="top" title="Delete" href="#delete_from_cart">
+            <i class="fa fa-trash"></i>
+          </a>
+        </li>
+        {% endif %}
+
+
+      </ul>
+    </div>
+  </td>
+</tr>
+
+<!-- Buy Ad -->
+<div id="buy_ad_" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+
+        <h4 class="modal-title w-100 text-center">Are you sure?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to buy {{ad.name}}? You will go to PayPal page!</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary bg-secondary" data-dismiss="modal">Cancel</button>
+        <a href="{% url 'paypal' ad.id %}">
+          <button type="button" class="btn btn-primary">Buy</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- delete_from_cart -->
+<div id="delete_from_cart" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+
+        <h4 class="modal-title w-100 text-center">Are you sure?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete {{ad.name}} from your cart? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary bg-secondary" data-dismiss="modal">Cancel</button>
+        <a href="{% url 'delete_from_cart' ad.id %}">
+          <button type="button" class="btn btn-danger">Delete</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}

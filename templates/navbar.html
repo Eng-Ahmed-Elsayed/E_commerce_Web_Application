@@ -1,0 +1,86 @@
+{% load static %}
+<header>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<nav class="navbar navbar-expand-lg navbar-light navigation">
+					<a class="navbar-brand" href="{% url 'home' %}">
+						<!-- style="width: 193px; height: 100px;" -->
+						<img src="{% static 'images/logo_t1.png' %}" alt="logo" style="width: 70px; ">
+					</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav ml-auto main-nav ">
+							<li class="nav-item @@home">
+								<a class="nav-link" href="{% url 'home' %}">Home</a>
+							</li>
+							<li class="nav-item dropdown dropdown-slide @@dashboard">
+								<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#!">Dashboard<span><i class="fa fa-angle-down"></i></span>
+								</a>
+
+								<!-- Dropdown list -->
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item @@dashboardMyAds" href="{% url 'dashboard' %}">Dashboard My Ads</a></li>
+									<li><a class="dropdown-item @@dashboardFavouriteAds" href="{% url 'favorite_ads' %}">Dashboard Favourite Ads</a></li>
+									<li><a class="dropdown-item @@dashboardPendingAds" href="{% url 'pending_approval' %}">Dashboard Pending Ads</a></li>
+									<li><a class="dropdown-item @@dashboardArchivedAds" href="{% url 'archived_ads' %}">Dashboard Archived Ads</a></li>
+								</ul>
+							</li>
+							<li class="nav-item dropdown dropdown-slide @@pages">
+								<a class="nav-link dropdown-toggle" href="{% url 'my_cart' %}" >
+									My Cart <span></span>
+								</a>
+								
+							</li>
+							{% if request.user.is_authenticated  %}
+							<li class="nav-item dropdown dropdown-slide @@pages">
+								<a class="nav-link dropdown-toggle" href="{% url 'profile' request.user.id %}" >
+									My Profile <span></span>
+								</a>
+								
+							</li>
+							{% endif %}
+							<li class="nav-item dropdown dropdown-slide @@listing">
+								<a class="nav-link dropdown-toggle" href="#!" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Listing <span><i class="fa fa-angle-down"></i></span>
+								</a>
+								<!-- Dropdown list -->
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item @@category" href="{% url 'ad_list_view' %}">All Ads</a></li>
+									<li><a class="dropdown-item @@listView" href="{% url 'category_view' %}">All Categories</a></li>
+								</ul>
+							</li>
+						</ul>
+						<ul class="navbar-nav ml-auto mt-10">
+							{% if request.user.is_authenticated %}
+							<li class="nav-item">
+								<a class="nav-link login-button" href="{% url 'profile' user.id %}">{{user.username.capitalize}}</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link login-button" href="{% url 'logout' %}">Logout</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-white add-button" href="{% url 'ad_list' %}"><i class="fa fa-plus-circle"></i> Add Listing</a>
+							</li>
+
+							
+							{% else %}
+							<li class="nav-item">
+								<a class="nav-link login-button" href="{% url 'login' %}">Login</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link login-button" href="{% url 'register' %}">Register</a>
+							</li>
+							{% endif %}
+							
+							
+						</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+	</div>
+</header>

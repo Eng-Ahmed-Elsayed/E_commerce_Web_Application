@@ -1,0 +1,238 @@
+{% extends 'main.html' %}
+{% block title %}{{ ad.name }}{% endblock %}
+{% block content %}
+<!-- Search -->
+<section class="page-search">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ">
+                <!-- Advance Search -->
+                <div class="advance-search nice-select-white">
+				{% include 'base/search.html' %}
+			</div>
+		</div>
+	</div>
+</div>
+</section>
+<!--===================================
+=            Store Section            =
+====================================-->
+<section class="section bg-gray">
+	<!-- Container Start -->
+	<div class="container">
+		<div class="row">
+			<!-- Left sidebar -->
+			<div class="col-lg-8">
+				<div class="product-details">
+					<h1 class="product-title">{{ad.name}}</h1>
+					<div class="product-meta">
+						<ul class="list-inline">
+							<li class="list-inline-item"><i class="fa fa-user-o"></i> By <a href="{% url 'profile' ad.user.id %}}">{{ad.user}}</a></li>
+							<li class="list-inline-item"><i class="fa fa-folder-open-o"></i> Category<a href="">{{ad.category}}</a></li>
+							<li class="list-inline-item"><i class="fa fa-location-arrow"></i> Location<a href="">{{ad.location}}</a></li>
+						</ul>
+					</div>
+
+					<!-- product slider -->
+					<div class="product-slider">
+						<div class="product-slider-item my-4" data-image="{{ad.img.url}}">
+							<img class="img-fluid w-100" src="{{ad.img.url}}" alt="product-img">
+						</div>
+						<div class="product-slider-item my-4" data-image="{{ad.img.url}}">
+							<img class="d-block img-fluid w-100" src="{{ad.img.url}}" alt="Second slide">
+						</div>
+						<div class="product-slider-item my-4" data-image="{{ad.img.url}}">
+							<img class="d-block img-fluid w-100" src="{{ad.img.url}}" alt="Third slide">
+						</div>
+						<div class="product-slider-item my-4" data-image="{{ad.img.url}}">
+							<img class="d-block img-fluid w-100" src="{{ad.img.url}}" alt="Third slide">
+						</div>
+						<div class="product-slider-item my-4" data-image="{{ad.img.url}}">
+							<img class="d-block img-fluid w-100" src="{{ad.img.url}}" alt="Third slide">
+						</div>
+					</div>
+					<!-- product slider end -->
+
+					<div class="content mt-5 pt-5">
+						<ul class="nav nav-pills  justify-content-center" id="pills-tab" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
+								 aria-selected="true">Product Details</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile"
+								 aria-selected="false">Specifications</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact"
+								 aria-selected="false">Reviews</a>
+							</li>
+						</ul>
+						<div class="tab-content" id="pills-tabContent">
+							<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+								<h3 class="tab-title">Product Description</h3>
+								{{ad.details}}
+
+							</div>
+							<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+								<h3 class="tab-title">Product Specifications</h3>
+								<table class="table table-bordered product-table">
+									<tbody>
+										<tr>
+											<td>Seller Price</td>
+											<td>{{ad.price}}</td>
+										</tr>
+										<tr>
+											<td>Added</td>
+											<td>{{ad.created|timesince}}</td>
+										</tr>
+										<tr>
+											<td>Status</td>
+											<td>{{ad.status}}</td>
+										</tr>
+										<tr>
+											<td>Pending Approval</td>
+											<td>{{ad.pending_approval}}</td>
+										</tr>
+										<tr>
+											<td>Brand</td>
+											<td>{{ad.brand}}</td>
+										</tr>
+										<tr>
+											<td>Model</td>
+											<td>{{ad.model_year}}</td>
+										</tr>
+										<tr>
+											<td>Location</td>
+											<td>{{ad.location}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							{% include 'dashboard/review.html' %}
+						</div>
+						<!-- Product Review -->
+						
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="sidebar">
+					{% if ad.user == request.user or ad.status.lower == 'archived' %}
+					<div class="widget price text-center">
+							<h4>Ad Price</h4>
+							<p>${{ad.price}}</p>
+					</div>
+					{% elif in_cart == False %}
+					<div class="widget price text-center">
+						<a href="{% url 'add_to_cart' ad.id %}" style="text-decoration: none; color: inherit;">
+							<h4>Add To Your Cart</h4>
+							<p>${{ad.price}}</p>
+						</a>
+						
+					</div>
+					{% else %}
+					<div class="widget price text-center bg-danger">
+						<a class="delete " data-toggle="modal" data-placement="top" title="Delete" href="#myModal" style="text-decoration: none; color: inherit;">
+							<h4>Delete From Your Cart</h4>
+							<p>${{ad.price}}</p>
+						</a>
+						
+					</div>
+					<!-- Modal HTML -->
+					<div id="myModal" class="modal fade">
+						<div class="modal-dialog modal-confirm">
+						  <div class="modal-content">
+							<div class="modal-header flex-column">
+												  
+							  <h4 class="modal-title w-100 text-center">Are you sure?</h4>	
+							</div>
+							<div class="modal-body">
+							  <p>Do you really want to delete {{ad.name}} from your cart? This process cannot be undone.</p>
+							</div>
+							<div class="modal-footer justify-content-center">
+							  <button type="button" class="btn btn-secondary bg-secondary" data-dismiss="modal">Cancel</button>
+							  <a href="{% url 'delete_from_cart' ad.id %}">
+								<button type="button" class="btn btn-danger">Delete</button>
+							  </a>
+							</div>
+						  </div>
+						</div>
+					  </div> 
+
+					{% endif %}
+					<!-- User Profile widget -->
+					<div class="widget user text-center">
+						<img class="rounded-circle img-fluid mb-5 px-5" src="{{ad.user.avatar.url}}" alt="">
+						<h4><a href="{% url 'profile' ad.user.id %}">{{ad.user.first_name}} {{ad.user.last_name}}</a></h4>
+						<p class="member-time">Member Since {{ad.user.date_joined}}</p>
+						<a href="{% url 'profile' ad.user.id %}">See all ads</a>
+						<ul class="list-inline mt-20">
+							<li class="list-inline-item"><a href="{% url 'profile' ad.user.id %}" class="btn btn-contact d-inline-block  btn-primary px-lg-5 my-1 px-md-3">Contact</a></li>
+						</ul>
+					</div>
+					<!-- Add to Fav -->
+					<div class="widget rate">
+						{% if in_fav == False %}
+						<h5 class="widget-header text-center">Add To Favourite</h5>
+						<ul class="list-inline mt-20 text-center">
+							<li class="list-inline-item"><a href="{% url 'add_ad_to_fav' ad.id %}" class="btn  d-inline-block  btn-primary px-lg-5 my-1 px-md-3"><i class="fa fa-bookmark" aria-hidden="true"></i></a></li>
+						</ul>
+						{% else %}
+						<h5 class="widget-header text-center">Delete From Favourite</h5>
+						<ul class="list-inline mt-20 text-center">
+							<li class="list-inline-item"><a href="{% url 'delete_ad_from_fav' ad.id %}" class="btn  d-inline-block  btn-danger px-lg-5 my-1 px-md-3"><i class="fa fa-trash"></i></a></li>
+						</ul>
+						{% endif %}
+					</div>
+					<!-- Safety tips widget -->
+					<div class="widget disclaimer">
+						<h5 class="widget-header">Safety Tips</h5>
+						<ul>
+							<li>Meet seller at a public place</li>
+							<li>Check the item before you buy</li>
+							<li>Pay only after collecting the item</li>
+						</ul>
+					</div>
+					<!-- Coupon Widget -->
+					<div class="widget coupon text-center">
+						<!-- Coupon description -->
+						<p>Have a great product to post ? Share it with
+							your fellow users.
+						</p>
+						<!-- Submii button -->
+						<a href="{% url 'ad_list' %}" class="btn btn-transparent-white">Submit Listing</a>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- Container End -->
+</section>
+
+{% if has_review == True %}
+    <!-- Modal HTML -->
+    <div id="delete_review" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header flex-column">
+    
+                    <h4 class="modal-title w-100 text-center">Are you sure?</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Do you really want to delete yoru review? This process cannot be undone.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary bg-secondary" data-dismiss="modal">Cancel</button>
+                    <a href="{% url 'delete_review' user_review.id %}">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+  </div> 
+{% endif %}
+{% endblock %}

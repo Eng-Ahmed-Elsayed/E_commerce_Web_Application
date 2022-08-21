@@ -1,0 +1,132 @@
+<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+    <h3 class="tab-title">Product Review</h3>
+    <div class="product-review">
+        {% for review in ad.review_set.all %}
+        <div class="media">
+            <!-- Avater -->
+            <div class="text-center mt-4">
+                <img src="{{review.user.avatar.url}}" alt="avater">
+            </div>
+            <div class="media-body">
+                <!-- Ratings -->
+                <div class="ratings">
+                    {% if review.rating == '1' %}
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                    </ul>
+                    {% elif review.rating == '2' %}
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                    </ul>
+                    {% elif review.rating == '3' %}
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                    </ul>
+                    {% elif review.rating == '4' %}
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                    </ul>
+                    {% else %}
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-star"></i>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+                <div class="name">
+                    <h5>{{review.user}}</h5>
+                </div>
+                <div class="date">
+                    <p>{{review.created|timesince}}</p>
+                </div>
+                <div class="review-comment">
+                    <p>
+                        {{review.review}}
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+        {% endfor %}
+        {% if request.user.is_authenticated %}
+        <div class="review-submission">
+            {% if has_review == False %}
+            <h3 class="tab-title">Submit your review</h3>
+            <div class="review-submit">
+                <form action="" method="POST" class="row">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="col-lg-12 mb-3">
+                        <h6 for=" {{field.name}} " class="font-weight-bold pt-4 pb-1">{{field.label}}</h6>
+                        {{field}}
+                    </div>
+                    {% endfor %}
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-main">Sumbit</button>
+                    </div>
+                </form>
+            </div>
+            {% else %}
+            <h4 class="tab-title text-center">You Already Have Review</h4>
+            <div class="text-center">
+                <a class="delete " data-toggle="modal" data-placement="top" title="Delete" href="#delete_review"><button
+                        class="btn btn-danger  d-inline-block px-lg-5 my-1 px-md-3"><i
+                            class="fa fa-trash"></i></button></a>
+                <a href="{% url 'edit_review' user_review.id %}"><button
+                        class="btn btn-primary d-inline-block px-lg-5 my-1 px-md-3"><i
+                            class="fa fa-pencil"></i></i></button></a>
+            </div>
+
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="review-submission">
+            <a href="{% url 'login' %}">
+                <div class="text-center h4">Please Log In To Make A Review</div>
+            </a>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>

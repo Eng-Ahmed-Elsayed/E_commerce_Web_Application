@@ -1,0 +1,94 @@
+{% extends 'main.html' %}
+{% block title %} {{page_name}} {% endblock %}
+{% block content %}
+<!--==================================
+=            User Profile            =
+===================================-->
+<section class="dashboard section">
+  <!-- Container Start -->
+  <div class="container">
+    <!-- Row Start -->
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="sidebar">
+          <!-- User Widget -->
+          <div class="widget user-dashboard-profile">
+            <!-- User Image -->
+            <div class="profile-thumb">
+              <a href="{% url 'profile' user.id %}" class="">
+                <img src="{{user.avatar.url}}" alt="" class="rounded-circle">
+              </a>
+            </div>
+            <!-- User Name -->
+            <h5 class="text-center"><a href="{% url 'profile' user.id %}">{{user.first_name}} {{user.last_name}}</a>
+            </h5>
+            <p>Joined {{user.date_joined}}</p>
+            <a href="{% url 'edit_profile' %}" class="btn btn-main-sm">Edit Profile</a>
+          </div>
+          <!-- Cart Links -->
+          <div class="widget user-dashboard-menu">
+            <ul>
+              {% if page_name == 'My Cart' %}
+              <li class="active">
+                <a href="{% url 'my_cart' %}"><i class="fa fa-user"></i> My Cart
+                  <span>{{p1}}</span>
+                </a>
+              </li>
+              <li class="">
+                <a href="{% url 'my_purchases' %}"><i class="fa fa-bookmark-o"></i> My Purchases
+                  <span>{{p2}}</span>
+                </a>
+              </li>
+              {% elif page_name == 'My Purchases' %}
+              <li class="">
+                <a href="{% url 'my_cart' %}"><i class="fa fa-user"></i> My Cart
+                  <span>{{p1}}</span>
+                </a>
+              </li>
+              <li class="active">
+                <a href="{% url 'my_purchases' %}"><i class="fa fa-bookmark-o"></i> My Purchases
+                  <span>{{p2}}</span>
+                </a>
+              </li>
+              {% endif %}
+
+              <li><a href="{% url 'logout' %}"><i class="fa fa-cog"></i> Logout</a></li>
+            </ul>
+          </div>
+
+
+
+
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <!-- Recently Favorited -->
+        <div class="widget dashboard-container my-adslist">
+          <h3 class="widget-header">{{page_name}}</h3>
+          <table class="table table-responsive product-dashboard-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Product Title</th>
+                <th class="text-center">Category</th>
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% include 'cart/cart_ads.html' %}
+            </tbody>
+          </table>
+
+        </div>
+
+        <!-- pagination -->
+        {% include 'base/pagination.html' %}
+        <!-- pagination -->
+
+      </div>
+    </div>
+    <!-- Row End -->
+  </div>
+  <!-- Container End -->
+</section>
+{% endblock %}

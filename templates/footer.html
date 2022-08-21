@@ -1,0 +1,55 @@
+{% load static %}
+<!--============================
+=            Footer            =
+=============================-->
+
+<footer class="footer section section-sm">
+    <!-- Container Start -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-7 offset-md-1 offset-lg-0 mb-4 mb-lg-0">
+          <!-- About -->
+          <div class="block about">
+            <!-- footer logo -->
+            <img src="{% static 'images/logo-footer_t1.png' %}" alt="logo" style="width: 193px; height: 100px;">
+            <!-- description -->
+            <p class="alt-color">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+              laboris nisi ut aliquip ex ea commodo consequat.</p>
+          </div>
+        </div>
+        <!-- Link list -->
+        <div class="col-lg-4 offset-lg-1 col-md-3 col-6 mb-4 mb-lg-0">
+          <div class="block">
+            <h4>Site Pages</h4>
+            <ul>
+              <li><a href="{% url 'dashboard' %}">My Ads</a></li>
+              <li><a href="{% url 'favorite_ads' %}">Favourite Ads</a></li>
+              <li><a href="{% url 'pending_approval' %}">Pending Ads</a></li>
+              <li><a href="{% url 'archived_ads' %}">Archived Ads</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Promotion -->
+        <div class="col-lg-4 col-md-7">
+          <!-- App promotion -->
+          <div class="block-2 app-promotion">
+            <div class="mobile d-flex  align-items-center">
+              <a href="index.html">
+                <!-- Icon -->
+                <img src="{% static 'images/footer/phone-icon.png' %}" alt="mobile-icon">
+              </a>
+              <p class="mb-0">Soon You Can Get The Mobile App And Save More</p>
+            </div>
+            <div class="download-btn d-flex my-3">
+              <a href="#!"><img src="{% static 'images/apps/google-play-store.png' %}" class="img-fluid" alt=""></a>
+              <a href="#!" class=" ml-3"><img src="{% static 'images/apps/apple-app-store.png' %}" class="img-fluid" alt=""></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container End -->
+  </footer>
+
+ 

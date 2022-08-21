@@ -1,0 +1,54 @@
+{% if ads.has_other_pages %}
+                <div class="pagination justify-content-center py-4">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {% if ads.has_previous %}
+                            <!-- q=a&category&page=4 -->
+                            <li class="page-item">
+                                <a class="page-link" 
+                                    href="?{% if request.GET.q %}&q={{ request.GET.q }}{% endif %} page={{ ads.previous_page_number }}" 
+                                    aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link disabled" href="#!" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% for num in ads.paginator.page_range %}
+                                {% if ads.number == num %}
+                                <li class="page-item"><a class="page-link" href="#!">{{ num }}</a></li>
+                                
+                                {% else %}
+                                <li class="page-item"><a class="page-link" 
+                                    href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ num }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if ads.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" 
+                                    href="?page={{ ads.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" 
+                                    aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link disabled" 
+                                    href="#!" 
+                                    aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                {% endif %}
