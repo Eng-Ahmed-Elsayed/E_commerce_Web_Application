@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # E_commerce Web Application With Django And Mysql
 
 ## Demeo <https://ahmedelsayed777.pythonanywhere.com/>
@@ -31,8 +30,3 @@
 ![1](images/Screenshot(392).png)
 ![1](images/Screenshot(393).png)
 ![1](images/Screenshot(394).png)
-=======
-# E_commerce_Web_Application With Django And Mysql
-Theme: https://themefisher.com/products/classimax
- 
->>>>>>> dcc7c525a62c4524c0be2321d7f5474e7649691b
