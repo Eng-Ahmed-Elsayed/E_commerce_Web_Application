@@ -9,9 +9,11 @@
 * Dashboard for user to manage and review his ads.
 * User can give feedback about any item.
 * Implemented a payment gateway that allowed users to checkout and pay for their items.
-* And you can expolre more in the demo
+* Advanced eCommerce SEO capabilities.
+* The ability to scale & add new eCommerce features.
+* You can expolre this and more in the demo.
 
-## images/Screenshots
+## Screenshots
 
 ![1](images/Screenshot(378).png)
 ![1](images/Screenshot(379).png)
